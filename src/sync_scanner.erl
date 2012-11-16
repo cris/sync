@@ -400,12 +400,6 @@ recompile_src_file(SrcFile, EnablePatching) ->
 
 print_results(Module, SrcFile, [], []) ->
     Msg = io_lib:format("~s:0: Recompiled.~n", [SrcFile]),
-    case code:is_loaded(Module) of
-        {file, _} ->
-            ok;
-        false ->
-            growl_success("Recompiled " ++ SrcFile ++ ".")
-    end,
     error_logger:info_msg(lists:flatten(Msg));
 
 print_results(_Module, SrcFile, [], Warnings) ->
