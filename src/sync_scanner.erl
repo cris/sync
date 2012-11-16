@@ -398,7 +398,7 @@ recompile_src_file(SrcFile, EnablePatching) ->
     end.
 
 
-print_results(Module, SrcFile, [], []) ->
+print_results(_Module, SrcFile, [], []) ->
     Msg = io_lib:format("~s:0: Recompiled.~n", [SrcFile]),
     error_logger:info_msg(lists:flatten(Msg));
 
