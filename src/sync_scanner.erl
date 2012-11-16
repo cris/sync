@@ -398,10 +398,15 @@ recompile_src_file(SrcFile, EnablePatching) ->
     end.
 
 
-print_results(_Module, _SrcFile, [], []) ->
-    %% Do not print message on successful compilation;
-    %% We already get a notification when the beam is reloaded.
-    ok;
+print_results(Module, SrcFile, [], []) ->
+    Msg = io_lib:format("~s:0: Recompiled.~n", [SrcFile]),
+    case code:is_loaded(Module) of
+        {file, _} ->
+            ok;
+        false ->
+            growl_success("Recompiled " ++ SrcFile ++ ".")
+    end,
+    error_logger:info_msg(lists:flatten(Msg));
 
 print_results(_Module, SrcFile, [], Warnings) ->
     Msg = [
